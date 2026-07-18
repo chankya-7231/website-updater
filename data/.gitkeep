@@ -1,0 +1,3 @@
+This folder stores the monitor's saved "snapshots" of each website.
+Do not delete these files - they are how the monitor remembers what
+the pages looked like last time, so it can detect changes.
