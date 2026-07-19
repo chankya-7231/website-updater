@@ -265,6 +265,35 @@ monitor is set up correctly and running.
 - Check that `WHATSAPP_APIKEY_1/2/3` was copied exactly, with no extra
   spaces.
 
+**I received nothing at all — no email, no WhatsApp**
+This almost always means a secret is missing or its name doesn't exactly
+match what the workflow expects (GitHub Secrets are silently skipped if
+the name doesn't match — it does NOT show an error). To check exactly
+what happened on your test run:
+1. Go to the **Actions** tab → click the most recent run → click
+   **check-websites** → click the **Run the website monitor** step to
+   expand it.
+2. Near the top of that step you'll see a list like `GMAIL_ADDRESS: ***`
+   for every secret. If a secret was picked up, it shows `***`. If it
+   was left blank, the line after the colon is empty — that tells you
+   exactly which secret is missing, without revealing its value.
+3. Further down, look for lines like:
+   - `Email sent to 1 recipient(s).` = email worked at the sending end.
+   - `No WhatsApp recipients configured - skipping WhatsApp.` = none of
+     the `WHATSAPP_PHONE_n` / `WHATSAPP_APIKEY_n` secrets were set for
+     that person — go back to Step 3 and Step 4 for them.
+   - `Gmail credentials not configured - skipping email.` = `GMAIL_ADDRESS`
+     or `GMAIL_APP_PASSWORD` is missing.
+   - `No email recipients configured - skipping email.` = none of the
+     `RECIPIENT_EMAIL_n` secrets were set.
+4. If the log says the email WAS sent but it never arrived in your
+   inbox, check your **Spam** or **Promotions** folder first — first-time
+   automated emails from a new sender commonly land there. Also
+   double-check there's no typo in the `RECIPIENT_EMAIL_n` secret value
+   (you can't view a saved secret's value again, only overwrite it — if
+   in doubt, click the secret, choose **Update**, and retype it
+   carefully).
+
 **The Actions run shows a red ❌**
 - Click into the failed run, then click the "Run the website monitor"
   step to read the error log.
