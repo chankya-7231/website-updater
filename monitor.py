@@ -282,7 +282,14 @@ def send_whatsapp_message(text: str) -> None:
 
 
 def send_email_message(subject: str, body: str) -> None:
-    """Sends one email (via BCC) to all configured recipients."""
+    """
+    Sends one email to all configured recipients, with every recipient
+    address directly in the "To" header. Putting real recipients in "To"
+    (rather than BCC-ing them while "To" is the sender's own address) is
+    deliberate: mail providers commonly score BCC-only mail as more
+    spam-like since the visible recipient doesn't match who received it,
+    which was causing test emails to go missing/land in spam.
+    """
     gmail_address = os.environ.get("GMAIL_ADDRESS", "").strip()
     gmail_app_password = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
     recipients = get_email_recipients()
@@ -296,8 +303,7 @@ def send_email_message(subject: str, body: str) -> None:
 
     message = MIMEMultipart()
     message["From"] = gmail_address
-    message["To"] = gmail_address  # send "to" ourselves
-    message["Bcc"] = ", ".join(recipients)  # BCC keeps recipients' emails private from each other
+    message["To"] = ", ".join(recipients)
     message["Subject"] = subject
     message.attach(MIMEText(body, "plain"))
 
@@ -305,8 +311,7 @@ def send_email_message(subject: str, body: str) -> None:
         with smtplib.SMTP("smtp.gmail.com", 587, timeout=REQUEST_TIMEOUT_SECONDS) as server:
             server.starttls()
             server.login(gmail_address, gmail_app_password)
-            all_recipients = [gmail_address] + recipients
-            server.sendmail(gmail_address, all_recipients, message.as_string())
+            server.sendmail(gmail_address, recipients, message.as_string())
         logger.info("Email sent to %d recipient(s).", len(recipients))
     except smtplib.SMTPException as exc:
         logger.error("Failed to send email: %s", exc)
