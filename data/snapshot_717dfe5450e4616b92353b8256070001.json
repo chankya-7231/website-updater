@@ -1,15 +1,11 @@
 {
-  "text_hash": "990323d81fa2a6134577ec8900ebe5d6cdfa5aa92edf5f6d5200656a4427cf25",
-  "text_length": 1503,
+  "text_hash": "8ae2493c50d40cdecc08c23a7914be48b9feed6a5fbad089f91875f25b9dbd89",
+  "text_length": 1098,
   "links": [
     "http://meity.gov.in/",
     "http://www.digitalindia.gov.in/",
     "http://www.linkedin.com/sharing/share-offsite/?url=https://mcc.nic.in/eservices-schedule-ug/&mini=true",
     "http://www.nic.in/",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/07/202509181307981517.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/10/20251028122896423.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/12/20251217381279523.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/12/20251231514083934.pdf",
     "https://india.gov.in/",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
@@ -33,11 +29,6 @@
     "https://www.mohfw.gov.in/",
     "https://x.com/share?url=https://mcc.nic.in/eservices-schedule-ug/&via=TWITTER_HANDLE&text=eservices%2FSchedule+UG"
   ],
-  "pdfs": [
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/07/202509181307981517.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/10/20251028122896423.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/12/20251217381279523.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/12/20251231514083934.pdf"
-  ],
-  "checked_at": "2026-07-25T15:54:42.559785+05:30"
+  "pdfs": [],
+  "checked_at": "2026-07-28T22:14:17.047948+05:30"
 }
