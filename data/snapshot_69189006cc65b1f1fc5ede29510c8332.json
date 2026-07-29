@@ -1,6 +1,6 @@
 {
-  "text_hash": "a893045a85d1682335458ac72176a09889461ec40d7b338b01368d0bbd0267fa",
-  "text_length": 2550,
+  "text_hash": "3564fec1f0393585230c7100fc1e7cb03648feb3456a0913ed7153a64147d660",
+  "text_length": 2165,
   "links": [
     "http://collabcad.gov.in/",
     "http://ecounselling.nic.in/",
@@ -11,15 +11,9 @@
     "http://www.nic.in/",
     "https://admissions.nic.in/",
     "https://aishe.gov.in/",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2024/05/2024050967.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/03/2025032551.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/03/202603171169822992.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/05/2026052710250622.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/06/20260610190630519.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
     "https://india.gov.in/",
-    "https://mcc.admissions.nic.in/Counseling/Report/ViewInstituteProfileDynamic.aspx?enc=89xw0ctRCXfaXHy3CACizMGeESUPc92SoSpzB/gzd/wSY6DDua8cQKQ+HT29rjmuRXQG2NoF+WHOj6h2WBR++A==",
-    "https://mcc.admissions.nic.in/Counseling/Root/Home.aspx?enc=89xw0ctRCXfaXHy3CACizMGeESUPc92SoSpzB/gzd/wSY6DDua8cQKQ+HT29rjmuRXQG2NoF+WHOj6h2WBR++A==",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
     "https://mcc.nic.in/about-department/",
@@ -32,6 +26,7 @@
     "https://mcc.nic.in/copyright-policy/",
     "https://mcc.nic.in/current-events-ug/",
     "https://mcc.nic.in/help/",
+    "https://mcc.nic.in/important-link-ug/",
     "https://mcc.nic.in/mds-counselling/",
     "https://mcc.nic.in/news-events-ug-medical/",
     "https://mcc.nic.in/pg-medical-counselling/",
@@ -40,7 +35,6 @@
     "https://mcc.nic.in/terms-and-conditions/",
     "https://mcc.nic.in/ug-medical-counselling/",
     "https://neet.nta.nic.in/",
-    "https://ntaresults.nic.in/resultservices/NEET-2021-auth",
     "https://s3waas.gov.in/",
     "https://scholarships.gov.in/",
     "https://udiseplus.gov.in/",
@@ -51,12 +45,8 @@
     "https://x.com/share?url=https://mcc.nic.in/ug-medical-counselling/&via=TWITTER_HANDLE&text=UG+Medical+Counselling"
   ],
   "pdfs": [
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2024/05/2024050967.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/03/2025032551.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/03/202603171169822992.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/05/2026052710250622.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/06/20260610190630519.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf"
   ],
-  "checked_at": "2026-07-28T20:28:25.059210+05:30"
+  "checked_at": "2026-07-29T13:00:32.953701+05:30"
 }
