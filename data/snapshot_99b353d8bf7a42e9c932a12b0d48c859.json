@@ -1,12 +1,13 @@
 {
-  "text_hash": "d884ef35bbc49f68e47a6bfbfdf3b3a2ef33e003e9046fedb1570eb223210766",
-  "text_length": 1205,
+  "text_hash": "8309e177d9df645e25fbfc3c750920f79d1334cf6d1a420e366f16d1ee876ead",
+  "text_length": 1306,
   "links": [
     "http://meity.gov.in/",
     "http://www.digitalindia.gov.in/",
     "http://www.linkedin.com/sharing/share-offsite/?url=https://mcc.nic.in/news-events-ug-medical/&mini=true",
     "http://www.nic.in/",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/2026073077713868.pdf",
     "https://india.gov.in/",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
@@ -31,7 +32,8 @@
     "https://x.com/share?url=https://mcc.nic.in/news-events-ug-medical/&via=TWITTER_HANDLE&text=News+%26%23038%3B+Events+UG"
   ],
   "pdfs": [
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf"
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/2026073077713868.pdf"
   ],
-  "checked_at": "2026-07-30T15:10:52.905072+05:30"
+  "checked_at": "2026-07-30T17:03:08.931405+05:30"
 }

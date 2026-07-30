@@ -1,6 +1,6 @@
 {
-  "text_hash": "f085a4714fb5266a89f659eec1d43ceb4d956047f3efe6039a59785368e8fb84",
-  "text_length": 2165,
+  "text_hash": "7fc0b2d4a26a22aeb0b71f6394c52705ee35ee9a36e90ba5de4df863abd37da1",
+  "text_length": 2229,
   "links": [
     "http://collabcad.gov.in/",
     "http://ecounselling.nic.in/",
@@ -13,6 +13,7 @@
     "https://aishe.gov.in/",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/05/2026052710250622.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/2026073077713868.pdf",
     "https://india.gov.in/",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
@@ -46,7 +47,8 @@
   ],
   "pdfs": [
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/05/2026052710250622.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf"
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/2026073077713868.pdf"
   ],
-  "checked_at": "2026-07-30T15:10:50.302465+05:30"
+  "checked_at": "2026-07-30T17:03:00.953108+05:30"
 }
