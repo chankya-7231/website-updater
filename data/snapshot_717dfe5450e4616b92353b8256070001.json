@@ -1,5 +1,4 @@
 {
-  "text_length": 1098,
   "links": [
     "http://meity.gov.in/",
     "http://www.digitalindia.gov.in/",
@@ -29,7 +28,22 @@
     "https://x.com/share?url=https://mcc.nic.in/eservices-schedule-ug/&via=TWITTER_HANDLE&text=eservices%2FSchedule+UG"
   ],
   "pdfs": [],
-  "checked_at": "2026-07-31T15:01:52.242561+05:30",
+  "text_chunks": [
+    ", Government of India",
+    "Admission and eCounselling Services for Session 2026",
+    "Content Owned and Managed by Medical Counselling Committee (MCC)",
+    "Developed and hosted by",
+    "Medical Counselling Committee (MCC)",
+    "Ministry of Electronics & Information Technology",
+    "Ministry of Health & Family Welfare",
+    "National Informatics Centre",
+    "Share on X (formerly Twitter)",
+    "eservices/Schedule UG",
+    "eservices/Schedule UG | Medical Counselling Committee (MCC) | India",
+    "\u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e \u092a\u0930\u093e\u092e\u0930\u094d\u0936 \u0938\u092e\u093f\u0924\u093f",
+    "\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u090f\u0935\u0902 \u092a\u0930\u093f\u0935\u093e\u0930 \u0915\u0932\u094d\u092f\u093e\u0923 \u092e\u0902\u0924\u094d\u0930\u093e\u0932\u092f"
+  ],
+  "checked_at": "2026-08-01T12:24:16.737244+05:30",
   "known_links": [
     "http://meity.gov.in/",
     "http://www.digitalindia.gov.in/",
@@ -68,5 +82,19 @@
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/12/20251217381279523.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2025/12/20251231514083934.pdf"
   ],
-  "text_chunks": []
+  "known_text_chunks": [
+    ", Government of India",
+    "Admission and eCounselling Services for Session 2026",
+    "Content Owned and Managed by Medical Counselling Committee (MCC)",
+    "Developed and hosted by",
+    "Medical Counselling Committee (MCC)",
+    "Ministry of Electronics & Information Technology",
+    "Ministry of Health & Family Welfare",
+    "National Informatics Centre",
+    "Share on X (formerly Twitter)",
+    "eservices/Schedule UG",
+    "eservices/Schedule UG | Medical Counselling Committee (MCC) | India",
+    "\u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e \u092a\u0930\u093e\u092e\u0930\u094d\u0936 \u0938\u092e\u093f\u0924\u093f",
+    "\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u090f\u0935\u0902 \u092a\u0930\u093f\u0935\u093e\u0930 \u0915\u0932\u094d\u092f\u093e\u0923 \u092e\u0902\u0924\u094d\u0930\u093e\u0932\u092f"
+  ]
 }
