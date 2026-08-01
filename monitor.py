@@ -86,6 +86,11 @@ USER_AGENT = (
     "NEETCounsellingMonitorBot/1.0"
 )
 
+# Lines of visible text shorter than this are ignored when looking for new
+# content - short fragments (page numbers, single dates, nav labels) are the
+# most common source of noisy false-positive alerts.
+MIN_TEXT_CHUNK_LENGTH = 20
+
 
 # ---------------------------------------------------------------------------
 # 2. LOGGING (so we can see what happened in the GitHub Actions log)
@@ -125,9 +130,19 @@ def fetch_page(url: str) -> str:
 def extract_snapshot(url: str, html: str) -> dict:
     """
     Turns raw HTML into a simple "snapshot" we can compare over time:
-      - text_hash: a fingerprint of all the visible text on the page
+      - text_chunks: distinct meaningful lines of visible text on the page
       - links: every link (href) found on the page, as full URLs
       - pdfs: every link that points to a PDF (or other downloadable file)
+
+    Many government sites show a rotating/reshuffled "latest news" widget,
+    so the exact same content can appear in a different order (or only a
+    random subset at a time) on every single load. Comparing a hash of the
+    WHOLE page, or comparing only against the immediately previous check,
+    made already-seen notices get flagged as "new" again every time they
+    cycled back into view. Splitting into individual text lines/links and
+    tracking everything ever seen (see compute_new_items) fixes that: an
+    item is only "new" the first time it's ever observed, no matter how
+    much the page reshuffles afterwards.
     """
     soup = BeautifulSoup(html, "html.parser")
 
@@ -136,10 +151,11 @@ def extract_snapshot(url: str, html: str) -> dict:
     for tag in soup(["script", "style", "noscript"]):
         tag.decompose()
 
-    # Collapse all visible text into one normalised string.
-    visible_text = soup.get_text(separator=" ", strip=True)
-    visible_text = " ".join(visible_text.split())
-    text_hash = hashlib.sha256(visible_text.encode("utf-8")).hexdigest()
+    text_chunks = set()
+    for line in soup.get_text(separator="\n").split("\n"):
+        line = " ".join(line.split())
+        if len(line) >= MIN_TEXT_CHUNK_LENGTH:
+            text_chunks.add(line)
 
     links = set()
     pdfs = set()
@@ -155,10 +171,9 @@ def extract_snapshot(url: str, html: str) -> dict:
             pdfs.add(absolute_url)
 
     return {
-        "text_hash": text_hash,
-        "text_length": len(visible_text),
         "links": sorted(links),
         "pdfs": sorted(pdfs),
+        "text_chunks": sorted(text_chunks),
         "checked_at": now_ist().isoformat(),
     }
 
@@ -187,32 +202,38 @@ def save_snapshot(url: str, snapshot: dict) -> None:
         json.dump(snapshot, f, indent=2)
 
 
-def diff_snapshots(previous: dict, current: dict) -> list:
+def compute_new_items(previous_snapshot: dict, current_snapshot: dict):
     """
-    Compares the old and new snapshot of a page and returns a list of
-    short, human-readable descriptions of what changed. An empty list
-    means nothing changed.
+    Compares the current snapshot against EVERYTHING ever seen on this page
+    (not just the last check) and returns only genuinely new items.
+
+    We deliberately never report "removed" items: on these government sites
+    a link/PDF/text line disappearing is almost always just the page's
+    rotating widget cycling it out of view, not a real removal, so treating
+    disappearance as noteworthy was a major source of misleading alerts.
     """
-    changes = []
+    known_links = set(previous_snapshot.get("known_links", previous_snapshot.get("links", [])))
+    known_pdfs = set(previous_snapshot.get("known_pdfs", previous_snapshot.get("pdfs", [])))
+    # Older snapshots (before this fix) never tracked text_chunks at all.
+    # is_text_baseline_only tells the caller to adopt this run's text as the
+    # starting point rather than reporting every line as "new".
+    is_text_baseline_only = "known_text_chunks" not in previous_snapshot
+    known_text_chunks = set(previous_snapshot.get("known_text_chunks", []))
 
-    if previous["text_hash"] != current["text_hash"]:
-        changes.append("Text content on the page has been updated.")
+    current_links = set(current_snapshot["links"])
+    current_pdfs = set(current_snapshot["pdfs"])
+    current_text_chunks = set(current_snapshot["text_chunks"])
 
-    new_links = sorted(set(current["links"]) - set(previous["links"]))
-    removed_links = sorted(set(previous["links"]) - set(current["links"]))
-    if new_links:
-        changes.append(f"{len(new_links)} new link(s) added.")
-    if removed_links:
-        changes.append(f"{len(removed_links)} link(s) removed.")
+    new_links = sorted(current_links - known_links)
+    new_pdfs = sorted(current_pdfs - known_pdfs)
+    new_text_chunks = [] if is_text_baseline_only else sorted(current_text_chunks - known_text_chunks)
 
-    new_pdfs = sorted(set(current["pdfs"]) - set(previous["pdfs"]))
-    removed_pdfs = sorted(set(previous["pdfs"]) - set(current["pdfs"]))
-    if new_pdfs:
-        changes.append(f"{len(new_pdfs)} new PDF/document link(s) added.")
-    if removed_pdfs:
-        changes.append(f"{len(removed_pdfs)} PDF/document link(s) removed.")
-
-    return changes, new_links, new_pdfs
+    updated_known = {
+        "known_links": sorted(known_links | current_links),
+        "known_pdfs": sorted(known_pdfs | current_pdfs),
+        "known_text_chunks": sorted(known_text_chunks | current_text_chunks),
+    }
+    return new_links, new_pdfs, new_text_chunks, updated_known
 
 
 # ---------------------------------------------------------------------------
@@ -427,14 +448,32 @@ def process_website(site: dict) -> bool:
         # We do NOT send a "changed" alert here, because there is nothing
         # to compare against yet (that would be a false positive).
         logger.info("No previous snapshot for %s - saving baseline.", name)
-        save_snapshot(url, current_snapshot)
+        baseline = dict(current_snapshot)
+        baseline["known_links"] = current_snapshot["links"]
+        baseline["known_pdfs"] = current_snapshot["pdfs"]
+        baseline["known_text_chunks"] = current_snapshot["text_chunks"]
+        save_snapshot(url, baseline)
         return False
 
-    changes, new_links, new_pdfs = diff_snapshots(previous_snapshot, current_snapshot)
+    new_links, new_pdfs, new_text_chunks, updated_known = compute_new_items(
+        previous_snapshot, current_snapshot
+    )
 
-    if not changes:
+    updated_snapshot = dict(current_snapshot)
+    updated_snapshot.update(updated_known)
+
+    if not (new_links or new_pdfs or new_text_chunks):
         logger.info("No changes for %s.", name)
+        save_snapshot(url, updated_snapshot)
         return False
+
+    changes = []
+    if new_pdfs:
+        changes.append(f"{len(new_pdfs)} new PDF/document link(s) added.")
+    if new_links:
+        changes.append(f"{len(new_links)} new link(s) added.")
+    if new_text_chunks:
+        changes.append(f"{len(new_text_chunks)} new text line(s) added.")
 
     logger.info("CHANGE DETECTED for %s: %s", name, "; ".join(changes))
 
@@ -445,17 +484,20 @@ def process_website(site: dict) -> bool:
         f"Change type: {'; '.join(changes)}",
         f"Visit: {url}",
     ]
-    if new_links:
-        body_lines.append("\nNew link(s):")
-        body_lines.extend(f"- {link}" for link in new_links[:10])
     if new_pdfs:
         body_lines.append("\nNew PDF/document link(s):")
         body_lines.extend(f"- {pdf}" for pdf in new_pdfs[:10])
+    if new_links:
+        body_lines.append("\nNew link(s):")
+        body_lines.extend(f"- {link}" for link in new_links[:10])
+    if new_text_chunks:
+        body_lines.append("\nNew text on the page:")
+        body_lines.extend(f"- {chunk}" for chunk in new_text_chunks[:10])
 
     subject = f"NEET Counselling Update Detected - {name}"
     send_alert(subject, "\n".join(body_lines))
 
-    save_snapshot(url, current_snapshot)
+    save_snapshot(url, updated_snapshot)
     return True
 
 
