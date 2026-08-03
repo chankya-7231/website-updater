@@ -6,6 +6,7 @@
     "http://www.nic.in/",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/202608012029012861.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260803759184231.pdf",
     "https://india.gov.in/",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
@@ -32,7 +33,8 @@
   ],
   "pdfs": [
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/202608012029012861.pdf"
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/202608012029012861.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260803759184231.pdf"
   ],
   "text_chunks": [
     ", Government of India",
@@ -48,11 +50,12 @@
     "National Informatics Centre",
     "News & Events UG | Medical Counselling Committee (MCC) | India",
     "Notice for PwBD Candidates and Medical Assessment Boards of MCC as per Revised NMC Guidelines (vide Corrigendum Notice of UGMEB, NMC No. U-11021/24204/2026-UGMEB Dated 31.07.2026 for Appendix D)",
+    "Notice for UG Counselling 2026 Participating Candidates",
     "Share on X (formerly Twitter)",
     "\u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e \u092a\u0930\u093e\u092e\u0930\u094d\u0936 \u0938\u092e\u093f\u0924\u093f",
     "\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u090f\u0935\u0902 \u092a\u0930\u093f\u0935\u093e\u0930 \u0915\u0932\u094d\u092f\u093e\u0923 \u092e\u0902\u0924\u094d\u0930\u093e\u0932\u092f"
   ],
-  "checked_at": "2026-08-03T11:29:11.452000+05:30",
+  "checked_at": "2026-08-03T15:30:06.603307+05:30",
   "known_links": [
     "http://meity.gov.in/",
     "http://www.digitalindia.gov.in/",
@@ -78,6 +81,7 @@
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/2026073077713868.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/202608012029012861.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260801916400169.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260803759184231.pdf",
     "https://india.gov.in/",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
@@ -125,7 +129,8 @@
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260724123467025.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/2026073077713868.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/202608012029012861.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260801916400169.pdf"
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/07/20260801916400169.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260803759184231.pdf"
   ],
   "known_text_chunks": [
     ", Government of India",
@@ -142,6 +147,7 @@
     "News & Events UG | Medical Counselling Committee (MCC) | India",
     "Notice for PwBD Candidates and Medical Assessment Boards of MCC",
     "Notice for PwBD Candidates and Medical Assessment Boards of MCC as per Revised NMC Guidelines (vide Corrigendum Notice of UGMEB, NMC No. U-11021/24204/2026-UGMEB Dated 31.07.2026 for Appendix D)",
+    "Notice for UG Counselling 2026 Participating Candidates",
     "Share on X (formerly Twitter)",
     "\u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e \u092a\u0930\u093e\u092e\u0930\u094d\u0936 \u0938\u092e\u093f\u0924\u093f",
     "\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u090f\u0935\u0902 \u092a\u0930\u093f\u0935\u093e\u0930 \u0915\u0932\u094d\u092f\u093e\u0923 \u092e\u0902\u0924\u094d\u0930\u093e\u0932\u092f"
