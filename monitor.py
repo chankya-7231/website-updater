@@ -409,8 +409,8 @@ def maybe_send_daily_status(any_changes_today: bool) -> None:
         subject = "NEET Counselling Monitor - Daily Status: No Changes Found"
         body = (
             f"Good morning! As of {current.strftime('%d %b %Y, %I:%M %p')} IST, "
-            "the automated monitor checked all 4 counselling websites and found "
-            "no changes since the last alert.\n\n"
+            f"the automated monitor checked all {len(WEBSITES)} counselling websites "
+            "and found no changes since the last alert.\n\n"
             "This is just a daily confirmation that the system is up and running. "
             "You will be alerted immediately (any time, day or night) the moment "
             "a real change is detected.\n\nMonitored pages:\n"

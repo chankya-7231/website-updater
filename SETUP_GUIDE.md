@@ -1,7 +1,7 @@
 # NEET / MBBS Counselling Website Monitor — Setup Guide
 
 This guide will walk you through setting up a free, automatic system that
-checks 4 government counselling websites every 15 minutes and sends a
+checks 6 government counselling website pages every 15 minutes and sends a
 WhatsApp message and an email to you and two other people the moment
 anything changes on those pages.
 
@@ -203,7 +203,7 @@ for free, using GitHub's own computers. Your computer or phone can be off.
 To double check it's running on schedule:
 - Go to the **Actions** tab any time and you'll see a new run appear
   roughly every 15 minutes.
-- Every day around 8:00 AM IST, if nothing changed on any of the 4 sites,
+- Every day around 8:00 AM IST, if nothing changed on any of the 6 pages,
   all 3 people will get one "No Changes Found — system is active" message,
   so you always know it's still working.
 - The moment any of the 4 pages changes — new text, a new link, a new PDF,
@@ -232,7 +232,7 @@ New PDF/document link(s):
 Subject: NEET Counselling Monitor - Daily Status: No Changes Found
 
 Good morning! As of 18 Jul 2026, 08:00 AM IST, the automated monitor
-checked all 4 counselling websites and found no changes since the last
+checked all 6 counselling websites and found no changes since the last
 alert. This is just a daily confirmation that the system is up and
 running.
 ```
