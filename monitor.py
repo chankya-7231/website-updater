@@ -44,7 +44,7 @@ except ImportError:  # pragma: no cover - fallback for very old Python
 WEBSITES = [
     {
         "name": "KNRUHS Telangana Admission Notifications",
-        "url": "https://www.knruhs.telangana.gov.in/admission-notifications/",
+        "url": "https://www.knruhs.telangana.gov.in/admission-notification/",
     },
     {
         "name": "MCC UG Medical Counselling",
@@ -57,6 +57,14 @@ WEBSITES = [
     {
         "name": "MCC News & Events (UG Medical)",
         "url": "https://mcc.nic.in/news-events-ug-medical/",
+    },
+    {
+        "name": "MCC Important Links (UG)",
+        "url": "https://mcc.nic.in/important-link-ug/",
+    },
+    {
+        "name": "MCC Current Events (UG)",
+        "url": "https://mcc.nic.in/current-events-ug/",
     },
 ]
 
@@ -71,6 +79,13 @@ os.makedirs(DATA_DIR, exist_ok=True)
 
 INITIALIZED_FLAG_FILE = os.path.join(DATA_DIR, "initialized.flag")
 DAILY_STATUS_FILE = os.path.join(DATA_DIR, "last_daily_status.json")
+FETCH_HEALTH_FILE = os.path.join(DATA_DIR, "fetch_health.json")
+
+# If a page fails to fetch this many checks IN A ROW (~2 hours at the
+# 15-minute schedule), send one alert saying the site is unreachable, so a
+# broken URL or a new bot-block gets noticed within hours instead of silently
+# going undetected for days or weeks.
+FETCH_FAILURE_ALERT_THRESHOLD = 8
 
 # The daily "everything is fine, no changes found" message is sent once a
 # day, close to 8:00 AM IST. Because the workflow runs every 15 minutes,
@@ -80,10 +95,14 @@ DAILY_STATUS_HOUR_IST = 8
 
 # HTTP settings used when downloading each page.
 REQUEST_TIMEOUT_SECONDS = 30
+# NOTE: this deliberately does NOT contain the word "bot" or any custom
+# suffix. Many government-site WAFs pattern-match "bot"/"crawler"/"spider"
+# in the User-Agent (case-insensitive) and silently 403 the request -
+# that was happening here (our old UA ended in "...NEETCounsellingMonitorBot/1.0")
+# even though the fetch code itself was working fine.
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/124.0 Safari/537.36 "
-    "NEETCounsellingMonitorBot/1.0"
+    "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 )
 
 # Lines of visible text shorter than this are ignored when looking for new
@@ -121,7 +140,12 @@ def now_ist() -> datetime:
 
 def fetch_page(url: str) -> str:
     """Downloads the raw HTML of a page. Raises an exception on failure."""
-    headers = {"User-Agent": USER_AGENT}
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Upgrade-Insecure-Requests": "1",
+    }
     response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT_SECONDS)
     response.raise_for_status()
     return response.text
@@ -420,6 +444,70 @@ def send_test_message() -> None:
 # 7. MAIN LOGIC
 # ---------------------------------------------------------------------------
 
+def load_fetch_health() -> dict:
+    if not os.path.exists(FETCH_HEALTH_FILE):
+        return {}
+    try:
+        with open(FETCH_HEALTH_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def save_fetch_health(health: dict) -> None:
+    with open(FETCH_HEALTH_FILE, "w", encoding="utf-8") as f:
+        json.dump(health, f, indent=2)
+
+
+def record_fetch_failure(name: str, url: str, error: str) -> None:
+    """
+    Tracks consecutive fetch failures per site. If a site has been
+    unreachable for a sustained run of checks (not just one transient
+    blip), sends a one-time alert - so a broken URL or a new bot-block
+    gets noticed within hours instead of silently going undetected for
+    days or weeks, which is what happened before this existed.
+    """
+    health = load_fetch_health()
+    entry = health.get(url, {"consecutive_failures": 0, "alerted": False})
+    entry["consecutive_failures"] += 1
+    entry["last_error"] = error
+    entry["last_checked_at"] = now_ist().isoformat()
+
+    if entry["consecutive_failures"] >= FETCH_FAILURE_ALERT_THRESHOLD and not entry["alerted"]:
+        logger.warning("Sending sustained-failure alert for %s", name)
+        subject = f"NEET Counselling Monitor - Site Unreachable: {name}"
+        body = (
+            f"The monitor has failed to reach this page for "
+            f"{entry['consecutive_failures']} checks in a row:\n\n"
+            f"{name}\n{url}\n\nLatest error: {error}\n\n"
+            "This usually means the page's URL changed, or the site is "
+            "blocking automated requests. The monitor will keep retrying "
+            "and will send another message once it's reachable again."
+        )
+        send_alert(subject, body)
+        entry["alerted"] = True
+
+    health[url] = entry
+    save_fetch_health(health)
+
+
+def record_fetch_success(name: str, url: str) -> None:
+    health = load_fetch_health()
+    entry = health.get(url)
+    if entry and entry.get("alerted"):
+        logger.info("Sending recovery alert for %s", name)
+        subject = f"NEET Counselling Monitor - Site Reachable Again: {name}"
+        body = (
+            "Good news - the monitor can reach this page again after "
+            f"{entry['consecutive_failures']} failed check(s):\n\n"
+            f"{name}\n{url}"
+        )
+        send_alert(subject, body)
+    if url in health:
+        del health[url]
+        save_fetch_health(health)
+
+
 def process_website(site: dict) -> bool:
     """
     Checks a single website. Returns True if a change alert was sent.
@@ -433,7 +521,10 @@ def process_website(site: dict) -> bool:
         html = fetch_page(url)
     except requests.RequestException as exc:
         logger.error("Could not fetch %s: %s", name, exc)
+        record_fetch_failure(name, url, str(exc))
         return False
+
+    record_fetch_success(name, url)
 
     try:
         current_snapshot = extract_snapshot(url, html)
