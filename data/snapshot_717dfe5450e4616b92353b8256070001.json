@@ -4,9 +4,9 @@
     "http://www.digitalindia.gov.in/",
     "http://www.linkedin.com/sharing/share-offsite/?url=https://mcc.nic.in/eservices-schedule-ug/&mini=true",
     "http://www.nic.in/",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260801170630.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191035699529.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191403764226.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260820667831297.pdf",
     "https://india.gov.in/",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
@@ -32,9 +32,9 @@
     "https://x.com/share?url=https://mcc.nic.in/eservices-schedule-ug/&via=TWITTER_HANDLE&text=eservices%2FSchedule+UG"
   ],
   "pdfs": [
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260801170630.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191035699529.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191403764226.pdf"
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191403764226.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260820667831297.pdf"
   ],
   "text_chunks": [
     ", Government of India",
@@ -49,14 +49,14 @@
     "National Informatics Centre",
     "Revised AIQ Schedule for Round 1 of UG Counselling dated 19.08.2026",
     "Revised AIQ and State Schedule for Round 1 of UG Cousenlling 2026 dated 19.08.2026",
+    "Revised UG Counselling 2026 Information Bulletin dated 20.08.2026",
     "Share on X (formerly Twitter)",
-    "UG Information Bulletin 2026 dated 01.08.2026",
     "eservices/Schedule UG",
     "eservices/Schedule UG | Medical Counselling Committee (MCC) | India",
     "\u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e \u092a\u0930\u093e\u092e\u0930\u094d\u0936 \u0938\u092e\u093f\u0924\u093f",
     "\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u090f\u0935\u0902 \u092a\u0930\u093f\u0935\u093e\u0930 \u0915\u0932\u094d\u092f\u093e\u0923 \u092e\u0902\u0924\u094d\u0930\u093e\u0932\u092f"
   ],
-  "checked_at": "2026-08-20T16:57:02.090597+05:30",
+  "checked_at": "2026-08-20T17:23:39.826372+05:30",
   "known_links": [
     "http://meity.gov.in/",
     "http://www.digitalindia.gov.in/",
@@ -72,6 +72,7 @@
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608131187512522.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191035699529.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191403764226.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260820667831297.pdf",
     "https://india.gov.in/",
     "https://mcc.nic.in",
     "https://mcc.nic.in/",
@@ -106,7 +107,8 @@
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260801732008988.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608131187512522.pdf",
     "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191035699529.pdf",
-    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191403764226.pdf"
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/202608191403764226.pdf",
+    "https://cdnbbsr.s3waas.gov.in/s3e0f7a4d0ef9b84b83b693bbf3feb8e6e/uploads/2026/08/20260820667831297.pdf"
   ],
   "known_text_chunks": [
     ", Government of India",
@@ -123,6 +125,7 @@
     "Revised AIQ Schedule for Round 1 of UG Counselling dated 19.08.2026",
     "Revised AIQ and State Schedule for Round 1 of UG Cousenlling 2026 dated 19.08.2026",
     "Revised Schedule for Round 1 dated 13.08.2026",
+    "Revised UG Counselling 2026 Information Bulletin dated 20.08.2026",
     "Share on X (formerly Twitter)",
     "UG AIQ Counselling Schedule 2026 dated 01.08.2026",
     "UG Information Bulletin 2026 dated 01.08.2026",
