@@ -1,8 +1,1 @@
-{
-  "https://www.knruhs.telangana.gov.in/admission-notification/": {
-    "consecutive_failures": 4,
-    "alerted": false,
-    "last_error": "HTTPSConnectionPool(host='www.knruhs.telangana.gov.in', port=443): Read timed out. (read timeout=30)",
-    "last_checked_at": "2026-08-24T21:16:35.567846+05:30"
-  }
-}
+{}
