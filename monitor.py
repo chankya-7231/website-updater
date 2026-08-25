@@ -138,17 +138,57 @@ def now_ist() -> datetime:
 # 3. FETCHING AND ANALYSING A PAGE
 # ---------------------------------------------------------------------------
 
+_playwright = None
+_browser = None
+_browser_context = None
+
+
+def _get_browser_context():
+    """
+    Lazily launches one shared headless Chromium browser, reused for every
+    monitored page in this run. These government sites render their actual
+    notice/PDF listings with client-side JavaScript after the initial page
+    load (confirmed: a plain HTTP GET returns only the generic page shell -
+    nav menu, footer, unrelated static PDFs - never the real notices, even
+    though the request itself succeeds with a 200). A real browser executes
+    that JavaScript exactly like a human visitor's browser would, so it
+    sees the same content a person checking the site manually would see.
+    """
+    global _playwright, _browser, _browser_context
+    if _browser_context is None:
+        from playwright.sync_api import sync_playwright
+
+        _playwright = sync_playwright().start()
+        _browser = _playwright.chromium.launch(headless=True)
+        _browser_context = _browser.new_context(user_agent=USER_AGENT, locale="en-US")
+    return _browser_context
+
+
+def close_browser() -> None:
+    """Shuts down the shared browser at the end of a run."""
+    global _playwright, _browser, _browser_context
+    if _browser is not None:
+        _browser.close()
+    if _playwright is not None:
+        _playwright.stop()
+    _browser = None
+    _browser_context = None
+    _playwright = None
+
+
 def fetch_page(url: str) -> str:
-    """Downloads the raw HTML of a page. Raises an exception on failure."""
-    headers = {
-        "User-Agent": USER_AGENT,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Upgrade-Insecure-Requests": "1",
-    }
-    response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT_SECONDS)
-    response.raise_for_status()
-    return response.text
+    """Downloads the fully rendered HTML of a page, including anything
+    added to it by JavaScript after the initial load."""
+    context = _get_browser_context()
+    page = context.new_page()
+    try:
+        page.goto(url, timeout=REQUEST_TIMEOUT_SECONDS * 1000, wait_until="domcontentloaded")
+        # Give client-side JavaScript (e.g. an AJAX-loaded notices list)
+        # a moment to finish populating the page after the initial HTML.
+        page.wait_for_timeout(3000)
+        return page.content()
+    finally:
+        page.close()
 
 
 def extract_snapshot(url: str, html: str) -> dict:
@@ -519,7 +559,7 @@ def process_website(site: dict) -> bool:
 
     try:
         html = fetch_page(url)
-    except requests.RequestException as exc:
+    except Exception as exc:  # noqa: BLE001 - Playwright raises its own exception types
         logger.error("Could not fetch %s: %s", name, exc)
         record_fetch_failure(name, url, str(exc))
         return False
@@ -599,12 +639,15 @@ def main() -> None:
     force_test = os.environ.get("SEND_TEST_MESSAGE", "false").strip().lower() == "true"
 
     any_changes = False
-    for site in WEBSITES:
-        try:
-            changed = process_website(site)
-            any_changes = any_changes or changed
-        except Exception as exc:  # noqa: BLE001 - one bad site must not stop the others
-            logger.error("Unexpected error while processing %s: %s", site["name"], exc)
+    try:
+        for site in WEBSITES:
+            try:
+                changed = process_website(site)
+                any_changes = any_changes or changed
+            except Exception as exc:  # noqa: BLE001 - one bad site must not stop the others
+                logger.error("Unexpected error while processing %s: %s", site["name"], exc)
+    finally:
+        close_browser()
 
     if is_first_ever_run:
         logger.info("First-ever run detected - sending welcome/test message.")
