@@ -159,8 +159,26 @@ def _get_browser_context():
         from playwright.sync_api import sync_playwright
 
         _playwright = sync_playwright().start()
-        _browser = _playwright.chromium.launch(headless=True)
-        _browser_context = _browser.new_context(user_agent=USER_AGENT, locale="en-US")
+        _browser = _playwright.chromium.launch(
+            headless=True,
+            # These two flags remove the most common signals bot-detection
+            # (e.g. Akamai) uses to tell headless Chromium apart from a
+            # real browser: an automation-controlled banner/CDP fingerprint
+            # and a visibly small default window size.
+            args=["--disable-blink-features=AutomationControlled"],
+        )
+        _browser_context = _browser.new_context(
+            user_agent=USER_AGENT,
+            locale="en-US",
+            viewport={"width": 1366, "height": 768},
+        )
+        # navigator.webdriver is normally True in an automated browser and
+        # False in a real one - this is one of the simplest, most common
+        # checks bot-detection scripts run. Override it before any page
+        # script gets a chance to read it.
+        _browser_context.add_init_script(
+            "Object.defineProperty(navigator, 'webdriver', { get: () => undefined });"
+        )
     return _browser_context
 
 
@@ -174,6 +192,23 @@ def close_browser() -> None:
     _browser = None
     _browser_context = None
     _playwright = None
+
+
+# Text signatures of common CDN/WAF block/error pages. These pages often
+# embed a fresh random request/reference ID every single time, which would
+# otherwise look like genuine "new content" on every check.
+CDN_BLOCK_PAGE_SIGNATURES = (
+    "errors.edgesuite.net",
+    "you don't have permission to access",
+    "access denied",
+    "request unsuccessful. incapsula incident id",
+    "attention required! | cloudflare",
+)
+
+
+def is_cdn_block_page(html: str) -> bool:
+    lowered = html.lower()
+    return any(sig in lowered for sig in CDN_BLOCK_PAGE_SIGNATURES)
 
 
 def fetch_page(url: str) -> str:
@@ -562,6 +597,16 @@ def process_website(site: dict) -> bool:
     except Exception as exc:  # noqa: BLE001 - Playwright raises its own exception types
         logger.error("Could not fetch %s: %s", name, exc)
         record_fetch_failure(name, url, str(exc))
+        return False
+
+    if is_cdn_block_page(html):
+        # A CDN/WAF (e.g. Akamai) blocked the request and served an error
+        # page instead of the real page. These include a random reference
+        # ID on every single request, which would otherwise look like
+        # "new text" on every check and spam an alert every run. Treat
+        # this exactly like a failed fetch instead.
+        logger.error("Could not fetch %s: blocked by site's CDN/WAF (error page returned)", name)
+        record_fetch_failure(name, url, "CDN/WAF block page returned instead of real content")
         return False
 
     record_fetch_success(name, url)
