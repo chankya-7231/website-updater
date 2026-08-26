@@ -1,32 +1,32 @@
 {
   "https://mcc.nic.in/ug-medical-counselling/": {
-    "consecutive_failures": 13,
+    "consecutive_failures": 14,
     "alerted": true,
     "last_error": "CDN/WAF block page returned instead of real content",
-    "last_checked_at": "2026-08-26T05:18:42.802407+05:30"
+    "last_checked_at": "2026-08-26T06:36:27.611663+05:30"
   },
   "https://mcc.nic.in/eservices-schedule-ug/": {
-    "consecutive_failures": 13,
+    "consecutive_failures": 14,
     "alerted": true,
     "last_error": "CDN/WAF block page returned instead of real content",
-    "last_checked_at": "2026-08-26T05:18:45.870874+05:30"
+    "last_checked_at": "2026-08-26T06:36:30.669402+05:30"
   },
   "https://mcc.nic.in/news-events-ug-medical/": {
-    "consecutive_failures": 13,
+    "consecutive_failures": 14,
     "alerted": true,
     "last_error": "CDN/WAF block page returned instead of real content",
-    "last_checked_at": "2026-08-26T05:18:48.942241+05:30"
+    "last_checked_at": "2026-08-26T06:36:33.728078+05:30"
   },
   "https://mcc.nic.in/important-link-ug/": {
-    "consecutive_failures": 13,
+    "consecutive_failures": 14,
     "alerted": true,
     "last_error": "CDN/WAF block page returned instead of real content",
-    "last_checked_at": "2026-08-26T05:18:52.007727+05:30"
+    "last_checked_at": "2026-08-26T06:36:36.784684+05:30"
   },
   "https://mcc.nic.in/current-events-ug/": {
-    "consecutive_failures": 13,
+    "consecutive_failures": 14,
     "alerted": true,
     "last_error": "CDN/WAF block page returned instead of real content",
-    "last_checked_at": "2026-08-26T05:18:55.105079+05:30"
+    "last_checked_at": "2026-08-26T06:36:39.839140+05:30"
   }
 }
