@@ -41,30 +41,44 @@ except ImportError:  # pragma: no cover - fallback for very old Python
 
 # The websites we want to watch for updates.
 # "name" is just a friendly label used in alert messages.
+# "use_browser": True fetches with a real headless browser (Playwright),
+# which executes JavaScript so it can see content that's added to the page
+# after the initial load - needed for KNRUHS, whose real notices only
+# appear this way. "use_browser": False uses a plain HTTP request instead,
+# which never renders JavaScript (so it can miss JS-added content) but is
+# far less likely to be flagged as a bot - needed for MCC, whose Akamai
+# bot-protection started hard-blocking every request once we switched it
+# to browser-based fetching, even with a browser fingerprint disguised.
 WEBSITES = [
     {
         "name": "KNRUHS Telangana Admission Notifications",
         "url": "https://www.knruhs.telangana.gov.in/admission-notification/",
+        "use_browser": True,
     },
     {
         "name": "MCC UG Medical Counselling",
         "url": "https://mcc.nic.in/ug-medical-counselling/",
+        "use_browser": False,
     },
     {
         "name": "MCC E-Services Schedule (UG)",
         "url": "https://mcc.nic.in/eservices-schedule-ug/",
+        "use_browser": False,
     },
     {
         "name": "MCC News & Events (UG Medical)",
         "url": "https://mcc.nic.in/news-events-ug-medical/",
+        "use_browser": False,
     },
     {
         "name": "MCC Important Links (UG)",
         "url": "https://mcc.nic.in/important-link-ug/",
+        "use_browser": False,
     },
     {
         "name": "MCC Current Events (UG)",
         "url": "https://mcc.nic.in/current-events-ug/",
+        "use_browser": False,
     },
 ]
 
@@ -211,7 +225,7 @@ def is_cdn_block_page(html: str) -> bool:
     return any(sig in lowered for sig in CDN_BLOCK_PAGE_SIGNATURES)
 
 
-def fetch_page(url: str) -> str:
+def fetch_page_browser(url: str) -> str:
     """Downloads the fully rendered HTML of a page, including anything
     added to it by JavaScript after the initial load."""
     context = _get_browser_context()
@@ -224,6 +238,27 @@ def fetch_page(url: str) -> str:
         return page.content()
     finally:
         page.close()
+
+
+def fetch_page_http(url: str) -> str:
+    """Downloads the raw HTML of a page with a plain HTTP request (no
+    JavaScript execution). Used for sites whose bot-protection blocks a
+    real browser harder than it blocks a plain request."""
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Upgrade-Insecure-Requests": "1",
+    }
+    response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT_SECONDS)
+    response.raise_for_status()
+    return response.text
+
+
+def fetch_page(site: dict) -> str:
+    if site.get("use_browser", False):
+        return fetch_page_browser(site["url"])
+    return fetch_page_http(site["url"])
 
 
 def extract_snapshot(url: str, html: str) -> dict:
@@ -593,8 +628,8 @@ def process_website(site: dict) -> bool:
     logger.info("Checking: %s (%s)", name, url)
 
     try:
-        html = fetch_page(url)
-    except Exception as exc:  # noqa: BLE001 - Playwright raises its own exception types
+        html = fetch_page(site)
+    except Exception as exc:  # noqa: BLE001 - Playwright/requests each raise their own types
         logger.error("Could not fetch %s: %s", name, exc)
         record_fetch_failure(name, url, str(exc))
         return False
