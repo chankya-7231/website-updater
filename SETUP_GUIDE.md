@@ -10,7 +10,7 @@ You do **not** need to know how to code. Just follow the steps below in
 order. Take your time — there's no rush, and nothing here costs any money.
 
 **What you're building, in plain words:** A robot that runs on GitHub's
-free computers (not yours), checks the websites every 15 minutes, remembers
+free computers (not yours), checks the website every 22 minutes, remembers
 what it saw last time, and texts/emails 3 people if anything is different.
 
 ---
@@ -144,26 +144,28 @@ code itself. They live only in this secure Secrets area.
 
 ## Step 5: Upload all the files to your repository
 
-You have 4 files/folders to upload:
+You have 6 files/folders to upload:
 - `monitor.py`
+- `watchdog.py`
 - `requirements.txt`
 - `.github/workflows/monitor.yml`
+- `.github/workflows/watchdog.yml`
 - `data/.gitkeep` (an empty placeholder file)
 
 **Easiest way (no coding tools needed):**
 
 1. On your repository's main page, click **Add file** → **Upload files**.
-2. Drag and drop `monitor.py` and `requirements.txt` into the box, then
-   scroll down and click **Commit changes**.
-3. For the workflow file, you need to recreate the folder structure. Click
-   **Add file** → **Create new file**.
+2. Drag and drop `monitor.py`, `watchdog.py`, and `requirements.txt` into
+   the box, then scroll down and click **Commit changes**.
+3. For each workflow file, you need to recreate the folder structure.
+   Click **Add file** → **Create new file**.
 4. In the "Name your file" box, type exactly:
    `.github/workflows/monitor.yml`
    (Typing the slashes will automatically create the folders for you.)
 5. Paste in the full contents of `monitor.yml` provided to you, then click
    **Commit changes**.
-6. Repeat step 3-5 for `data/.gitkeep`, typing the filename `data/.gitkeep`
-   and pasting its content.
+6. Repeat steps 3-5 for `.github/workflows/watchdog.yml` and for
+   `data/.gitkeep`, pasting each file's own content.
 
 **If you're comfortable with git on a computer instead**, you can simply
 copy all the files into your local clone of the repository and run:
@@ -308,9 +310,11 @@ what happened on your test run:
 
 **A website seems to be down and no alert was sent**
 - This is expected and safe behaviour — if a site is temporarily
-  unreachable, the monitor simply logs it and tries again in 15 minutes.
+  unreachable, the monitor simply logs it and tries again in 22 minutes.
   It will never send a false "changed" alert just because a site was
-  briefly down.
+  briefly down. If it stays unreachable for about 3 hours straight
+  (8 checks in a row), you'll get one "Site Unreachable" email, then
+  one "Site Reachable Again" email once it recovers.
 
 **I want to test again after the first run**
 - Go to Actions → NEET Counselling Website Monitor → Run workflow, and
@@ -319,13 +323,15 @@ what happened on your test run:
 
 **I want to change how often it checks, or add keyword filtering later**
 - Open `.github/workflows/monitor.yml` and edit the line
-  `- cron: "*/15 * * * *"` to change frequency.
+  `- cron: "*/22 * * * *"` to change frequency. Very frequent schedules
+  (e.g. every 5 minutes) tend to get delayed by GitHub itself, so slower
+  is often more reliable, not less.
 - Keyword filtering (e.g. only alert on the word "MBBS" or "Round 2") can
-  be added later inside `monitor.py` in the `diff_snapshots` function —
+  be added later inside `monitor.py` in the `compute_new_items` function —
   just ask for help when you're ready for that.
 
 ---
 
-You're all set! The system will now quietly watch these 4 pages around the
+You're all set! The system will now quietly watch this page around the
 clock and let you and your 2 teammates know the moment anything important
 happens — completely free.
