@@ -70,14 +70,14 @@ INITIALIZED_FLAG_FILE = os.path.join(DATA_DIR, "initialized.flag")
 DAILY_STATUS_FILE = os.path.join(DATA_DIR, "last_daily_status.json")
 FETCH_HEALTH_FILE = os.path.join(DATA_DIR, "fetch_health.json")
 
-# If a page fails to fetch this many checks IN A ROW (~2 hours at the
-# 15-minute schedule), send one alert saying the site is unreachable, so a
+# If a page fails to fetch this many checks IN A ROW (~3 hours at the
+# 22-minute schedule), send one alert saying the site is unreachable, so a
 # broken URL or a new bot-block gets noticed within hours instead of silently
 # going undetected for days or weeks.
 FETCH_FAILURE_ALERT_THRESHOLD = 8
 
 # The daily "everything is fine, no changes found" message is sent once a
-# day, close to 8:00 AM IST. Because the workflow runs every 15 minutes,
+# day, close to 8:00 AM IST. Because the workflow runs every 22 minutes,
 # we send it the first time we notice the clock has reached this window
 # on a new calendar day (IST).
 DAILY_STATUS_HOUR_IST = 8
