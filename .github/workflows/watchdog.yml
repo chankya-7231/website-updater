@@ -1,0 +1,38 @@
+name: NEET Counselling Monitor - Watchdog
+
+# Runs on its own, separate, less-frequent schedule (hourly, at :07 to
+# avoid the busiest top-of-hour minute) so it isn't subject to the same
+# GitHub scheduler deprioritization that can delay the very-frequent
+# main check workflow (monitor.yml) for hours. Its only job is to
+# notice a gap and email about it - it never touches the repo's data.
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  check-gap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run watchdog
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL_1: ${{ secrets.RECIPIENT_EMAIL_1 }}
+          RECIPIENT_EMAIL_2: ${{ secrets.RECIPIENT_EMAIL_2 }}
+          RECIPIENT_EMAIL_3: ${{ secrets.RECIPIENT_EMAIL_3 }}
+        run: python watchdog.py

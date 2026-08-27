@@ -41,44 +41,19 @@ except ImportError:  # pragma: no cover - fallback for very old Python
 
 # The websites we want to watch for updates.
 # "name" is just a friendly label used in alert messages.
+# This repository now monitors KNRUHS only. MCC moved to its own separate
+# repository/workflow, so a problem specific to one site's tracker (e.g.
+# a bot-protection block) can't affect or get tangled up with the other's.
+#
 # "use_browser": True fetches with a real headless browser (Playwright),
 # which executes JavaScript so it can see content that's added to the page
-# after the initial load - needed for KNRUHS, whose real notices only
-# appear this way. "use_browser": False uses a plain HTTP request instead,
-# which never renders JavaScript (so it can miss JS-added content) but is
-# far less likely to be flagged as a bot - needed for MCC, whose Akamai
-# bot-protection started hard-blocking every request once we switched it
-# to browser-based fetching, even with a browser fingerprint disguised.
+# after the initial load - needed here, since KNRUHS's real notices only
+# appear this way.
 WEBSITES = [
     {
         "name": "KNRUHS Telangana Admission Notifications",
         "url": "https://www.knruhs.telangana.gov.in/admission-notification/",
         "use_browser": True,
-    },
-    {
-        "name": "MCC UG Medical Counselling",
-        "url": "https://mcc.nic.in/ug-medical-counselling/",
-        "use_browser": False,
-    },
-    {
-        "name": "MCC E-Services Schedule (UG)",
-        "url": "https://mcc.nic.in/eservices-schedule-ug/",
-        "use_browser": False,
-    },
-    {
-        "name": "MCC News & Events (UG Medical)",
-        "url": "https://mcc.nic.in/news-events-ug-medical/",
-        "use_browser": False,
-    },
-    {
-        "name": "MCC Important Links (UG)",
-        "url": "https://mcc.nic.in/important-link-ug/",
-        "use_browser": False,
-    },
-    {
-        "name": "MCC Current Events (UG)",
-        "url": "https://mcc.nic.in/current-events-ug/",
-        "use_browser": False,
     },
 ]
 
@@ -519,8 +494,9 @@ def maybe_send_daily_status(any_changes_today: bool) -> None:
         subject = "NEET Counselling Monitor - Daily Status: No Changes Found"
         body = (
             f"Good morning! As of {current.strftime('%d %b %Y, %I:%M %p')} IST, "
-            f"the automated monitor checked all {len(WEBSITES)} counselling websites "
-            "and found no changes since the last alert.\n\n"
+            f"the automated monitor checked all {len(WEBSITES)} counselling "
+            f"website{'s' if len(WEBSITES) != 1 else ''} and found no changes "
+            "since the last alert.\n\n"
             "This is just a daily confirmation that the system is up and running. "
             "You will be alerted immediately (any time, day or night) the moment "
             "a real change is detected.\n\nMonitored pages:\n"

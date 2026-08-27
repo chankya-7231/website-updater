@@ -1,9 +1,10 @@
 # NEET / MBBS Counselling Website Monitor — Setup Guide
 
 This guide will walk you through setting up a free, automatic system that
-checks 6 government counselling website pages every 15 minutes and sends a
+checks the KNRUHS admission notifications page every 22 minutes and sends a
 WhatsApp message and an email to you and two other people the moment
-anything changes on those pages.
+anything changes on that page. (MCC is tracked separately, by its own
+repository, so a problem with one tracker can never affect the other.)
 
 You do **not** need to know how to code. Just follow the steps below in
 order. Take your time — there's no rush, and nothing here costs any money.
@@ -197,17 +198,21 @@ git push
 ## Step 7: Confirm the automatic schedule is active
 
 That's it — you don't need to do anything else! Once the files are in your
-repository, GitHub automatically runs the check every 15 minutes, forever,
+repository, GitHub automatically runs the check every 22 minutes, forever,
 for free, using GitHub's own computers. Your computer or phone can be off.
 
 To double check it's running on schedule:
 - Go to the **Actions** tab any time and you'll see a new run appear
-  roughly every 15 minutes.
-- Every day around 8:00 AM IST, if nothing changed on any of the 6 pages,
-  all 3 people will get one "No Changes Found — system is active" message,
-  so you always know it's still working.
-- The moment any of the 4 pages changes — new text, a new link, a new PDF,
-  a new announcement — everyone gets an alert immediately, any time of day
+  roughly every 22 minutes.
+- Every day around 8:00 AM IST, if nothing changed on the page, all 3
+  people will get one "No Changes Found — system is active" message, so
+  you always know it's still working.
+- A separate "Watchdog" workflow runs once an hour and emails you if the
+  regular checks seem to have stopped happening (GitHub's own scheduler
+  can occasionally delay or skip very-frequent scheduled runs under
+  load) — so a gap gets noticed instead of silently missing updates.
+- The moment the page changes — new text, a new link, a new PDF, a new
+  announcement — everyone gets an alert immediately, any time of day
   or night.
 
 ---
@@ -216,15 +221,15 @@ To double check it's running on schedule:
 
 **WhatsApp / Email alert when something changes:**
 ```
-Subject: NEET Counselling Update Detected - MCC UG Medical Counselling
+Subject: NEET Counselling Update Detected - KNRUHS Telangana Admission Notifications
 
-A change was detected on: MCC UG Medical Counselling
+A change was detected on: KNRUHS Telangana Admission Notifications
 Time: 18 Jul 2026, 09:32 AM IST
 Change type: 1 new PDF/document link(s) added.
-Visit: https://mcc.nic.in/ug-medical-counselling/
+Visit: https://www.knruhs.telangana.gov.in/admission-notification/
 
 New PDF/document link(s):
-- https://mcc.nic.in/documents/notice-round-2.pdf
+- https://www.knruhs.telangana.gov.in/wp-content/uploads/notifications/notice-round-2.pdf
 ```
 
 **Daily "no changes" status message (once a day, ~8:00 AM IST):**
@@ -232,7 +237,7 @@ New PDF/document link(s):
 Subject: NEET Counselling Monitor - Daily Status: No Changes Found
 
 Good morning! As of 18 Jul 2026, 08:00 AM IST, the automated monitor
-checked all 6 counselling websites and found no changes since the last
+checked the counselling website and found no changes since the last
 alert. This is just a daily confirmation that the system is up and
 running.
 ```
