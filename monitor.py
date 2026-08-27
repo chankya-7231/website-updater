@@ -518,7 +518,8 @@ def send_test_message() -> None:
         "This is a test message confirming your NEET/MBBS counselling website "
         f"monitor is set up correctly and running as of {current.strftime('%d %b %Y, %I:%M %p')} IST.\n\n"
         "From now on, you will receive:\n"
-        "- An immediate alert whenever any of the 4 monitored pages changes\n"
+        f"- An immediate alert whenever any of the {len(WEBSITES)} monitored "
+        f"page{'s' if len(WEBSITES) != 1 else ''} changes\n"
         "- One daily status update at around 8:00 AM IST confirming the system is active\n\n"
         "Monitored pages:\n"
         + "\n".join(f"- {site['name']}: {site['url']}" for site in WEBSITES)
