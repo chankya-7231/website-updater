@@ -1,1 +1,8 @@
-{}
+{
+  "https://www.knruhs.telangana.gov.in/admission-notification/": {
+    "consecutive_failures": 1,
+    "alerted": false,
+    "last_error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.knruhs.telangana.gov.in/admission-notification/\", waiting until \"domcontentloaded\"\n",
+    "last_checked_at": "2026-11-03T14:02:56.252147+05:30"
+  }
+}
