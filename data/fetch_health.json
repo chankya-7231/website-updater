@@ -1,8 +1,1 @@
-{
-  "https://www.knruhs.telangana.gov.in/admission-notification/": {
-    "consecutive_failures": 1,
-    "alerted": false,
-    "last_error": "Page.goto: net::ERR_CONNECTION_RESET at https://www.knruhs.telangana.gov.in/admission-notification/\nCall log:\n  - navigating to \"https://www.knruhs.telangana.gov.in/admission-notification/\", waiting until \"domcontentloaded\"\n",
-    "last_checked_at": "2026-11-22T17:28:14.353356+05:30"
-  }
-}
+{}
